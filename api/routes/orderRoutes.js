@@ -31,3 +31,19 @@ router.get('/test', (req, res) => {
   });  
   
 module.exports = router;
+
+  // Delete an order
+  router.delete('/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deletedOrder = await Order.findOneAndDelete({ id });
+  
+      if (!deletedOrder) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+  
+      res.status(200).json({ message: 'Order deleted successfully', deletedOrder });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to delete order', error });
+    }
+  });
