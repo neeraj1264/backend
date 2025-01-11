@@ -28,4 +28,4 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/customerdata', customerdataRoutes);
 
-module.exports = app; 
+module.exports = app;
