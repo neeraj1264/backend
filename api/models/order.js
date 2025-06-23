@@ -7,7 +7,7 @@ const orderSchema = new mongoose.Schema({
   name: { type: String },
   phone: { type: Number },
   address: { type: String },
-  timestamp: { type: String, required: true },
+  timestamp: { type: String, required: true }, 
 });
 
 const Order = mongoose.model('Order', orderSchema);
