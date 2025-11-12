@@ -63,9 +63,9 @@ router.put("/:id", async (req, res) => {
     }
 
     if (type === "gave") {
-      customer.lifetimeSale += amount; // sale increased
+      customer.youwillget += amount; // sale increased
     } else if (type === "received") {
-      customer.receivedAmount += amount; // payment received
+      customer.youwillgave += amount; // payment received
     }
 
     customer.transactions.push({ type, amount, description });
