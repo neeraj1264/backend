@@ -10,7 +10,7 @@ const transactionSchema = new mongoose.Schema({
 const customerdataSchema = new mongoose.Schema({
   // id: { type: String, required: true },
   name: { type: String },
-  phone: { type: Number },
+  phone: { type: String, unique: true, index: true },
   address: { type: String },
   timestamp: { type: String, required: true },
   totalAmount: { type: Number, default: 0 },
