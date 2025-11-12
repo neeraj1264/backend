@@ -8,7 +8,7 @@ const transactionSchema = new mongoose.Schema({
 });
 
 const customerdataSchema = new mongoose.Schema({
-  id: { type: String, required: true },
+  // id: { type: String, required: true },
   name: { type: String },
   phone: { type: Number },
   address: { type: String },
