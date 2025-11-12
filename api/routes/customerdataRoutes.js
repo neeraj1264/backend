@@ -8,33 +8,20 @@ router.post('/', async (req, res) => {
       const { id, timestamp, name, phone, address, 
       paidAmount = 0, // number
       creditAmount = 0, // number
-      transactions = [], } = req.body;
+      transactions, } = req.body;
   
-          const phoneStr = phone != null ? String(phone).trim() : "";
-
-       // prefer using normalized phone if available, otherwise fallback to name dedupe (optional)
-    let existingCustomer = null;
-    if (phoneStr) {
-      existingCustomer = await CustomerData.findOne({ phone: phoneStr });
-    }
-
+      // Check if a customer with the same phone number already exists
+      const existingCustomer = await CustomerData.findOne({ phone });
       if (existingCustomer) {
         console.log(`Customer with phone ${phone} already exists. Skipping addition.`);
-      return res.status(409).json({ message: 'Customer already exists', customer: existingCustomer });
+        return res.status(200).json({ message: 'Customer already exists, no changes made.' });
       }
   
-       // create with safe defaults so validation doesn't fail
-    const customer = new CustomerData({
-      id: id || `cust-${Date.now()}`,
-      timestamp: timestamp ? new Date(timestamp) : new Date(),
-      name: name || "",
-      phone: phoneStr,
-      address: address || "",
-      email: email || "",
-      transactions: Array.isArray(transactions) ? transactions : [],
-      totalCash: Number(paidAmount || 0),
-      totalOwed: Number(creditAmount || 0),
-    });
+      // Create a new customer entry if no match is found
+      const customer = new CustomerData({ id, timestamp, name, phone, address,   totalCash: Number(paidAmount || 0),
+        totalOwed: Number(creditAmount || 0),
+        totalAmount: Number(paidAmount || 0) + Number(creditAmount || 0),
+        transactions, });
 
          if (name) customer.name = name;
     if (address) customer.address = address;
